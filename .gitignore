@@ -1,0 +1,5 @@
+##ignore list
+*.classpath
+*.project
+*.vscode/
+*.settings/
