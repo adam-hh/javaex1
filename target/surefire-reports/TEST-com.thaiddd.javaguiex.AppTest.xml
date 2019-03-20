@@ -5,7 +5,7 @@
     <property name="sun.boot.library.path" value="/usr/java/jdk1.8.0_202-amd64/jre/lib/amd64"/>
     <property name="java.vm.version" value="25.202-b08"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="/mnt/javaprj/ex1"/>
+    <property name="maven.multiModuleProjectDirectory" value="/mnt/javaprj/javaex1"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=":"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/mnt/javaprj/ex1"/>
+    <property name="user.dir" value="/mnt/javaprj/javaex1"/>
     <property name="java.runtime.version" value="1.8.0_202-b08"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/usr/java/jdk1.8.0_202-amd64/jre/lib/endorsed"/>
@@ -27,7 +27,7 @@
     <property name="os.name" value="Linux"/>
     <property name="classworlds.conf" value="/mnt/maven/bin/m2.conf"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.library.path" value=".:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
     <property name="maven.conf" value="/mnt/maven/conf"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>

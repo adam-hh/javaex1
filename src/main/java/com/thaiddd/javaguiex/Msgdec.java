@@ -20,7 +20,7 @@ public class Msgdec
 	private String fieldTPDU;
 	private String fieldMsghead;
 	private String fieldBody[];
-	private bool isFinished;
+	private boolean isFinished;
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
@@ -57,7 +57,7 @@ public class Msgdec
 		return fieldBody[index];
 	}
 
-	public bool fillWholeMsgdec(String... str)
+	public boolean fillWholeMsgdec(String... str)
 	{
 		if(69 != str.length)
 			return false;
@@ -70,7 +70,7 @@ public class Msgdec
 		return true;
 	}
 
-	public bool isFilled()
+	public boolean isFilled()
 	{
 		return isFinished;
 	}
