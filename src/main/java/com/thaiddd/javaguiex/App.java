@@ -7,6 +7,7 @@ package com.thaiddd.javaguiex;
 public class App 
 {
     public native void displayHelloworld();
+	public native bool msgdec(String in, Msgdec out);
     static {
         try{
             //System.setProperty("java.library.path", System.getProperty("java.library.path")
@@ -22,6 +23,11 @@ public class App
     {
         //System.out.println( "Hello World!" );
         App helloworld = new App();
+		Msgdec dec = new Msgdec();
         helloworld.displayHelloworld();
+		if(helloworld.msgdec(args[0], dec))
+			System.print(dec);
+		else
+			System.println("Decode failed.");
     }
 }
