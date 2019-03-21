@@ -25,7 +25,7 @@ public class App
         App helloworld = new App();
 		Msgdec dec = new Msgdec();
         helloworld.displayHelloworld();
-		if(helloworld.msgdec(args[0], dec))
+		if(helloworld.msgdec("args[0]", dec))
 			System.out.print(dec);
 		else
 			System.out.println("Decode failed.");

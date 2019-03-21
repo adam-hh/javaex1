@@ -59,7 +59,7 @@ public class Msgdec
 
 	public boolean fillWholeMsgdec(String... str)
 	{
-		if(69 != str.length)
+		if(68 != str.length)
 			return false;
 		fieldLen = str[0];
 		fieldTPDU = str[1];
