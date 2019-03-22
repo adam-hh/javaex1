@@ -13,8 +13,8 @@ public class Msgdec
 		fieldMsghead = "";
 		fieldBody = new String[65];
 		isFinished = false;
-		for(String i : fieldBody)
-			i = "";
+		for(String s : fieldBody)
+			s = "";
     }
 	private String fieldLen;
 	private String fieldTPDU;
@@ -57,15 +57,23 @@ public class Msgdec
 		return fieldBody[index];
 	}
 
-	public boolean fillWholeMsgdec(String... str)
+	public boolean fillWholeMsgdec(Object... str)
 	{
 		if(68 != str.length)
 			return false;
-		fieldLen = str[0];
-		fieldTPDU = str[1];
-		fieldMsghead = str[2];
+		fieldLen = str[0].toString();
+		fieldTPDU = str[1].toString();
+		fieldMsghead = str[2].toString();
 		for(int i = 0;i < fieldBody.length; i++)
-			fieldBody[i] = str[3 + i]; 
+			fieldBody[i] = str[3 + i].toString(); 
+		isFinished = true;
+		return true;
+	}
+
+	public boolean fillTPDU(String str)
+	{
+		if(null == str)
+			return false;
 		isFinished = true;
 		return true;
 	}
@@ -73,6 +81,11 @@ public class Msgdec
 	public boolean isFilled()
 	{
 		return isFinished;
+	}
+
+	public void publicTest()
+	{
+		System.out.println("call method void publicTest()");
 	}
 	
 }
