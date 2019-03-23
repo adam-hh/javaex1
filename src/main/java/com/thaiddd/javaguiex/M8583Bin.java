@@ -54,6 +54,8 @@ public class M8583Bin
 
     public boolean fillWholeMsg(byte[][] bt)
     {
+        if(null == bt)
+            return false;
         if(68 != bt.length)
             return false;
         fieldLen = bt[0];

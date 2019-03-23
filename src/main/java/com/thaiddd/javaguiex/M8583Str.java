@@ -51,6 +51,8 @@ public class M8583Str
 
 	public boolean fillWholeMsg(String...str)
 	{
+		if(null == str)
+			return false;
 		if(str.length != 68)
 			return false;
 		fieldLen = str[0];
