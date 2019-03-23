@@ -14,11 +14,13 @@ public class Test
     }
     public static void main(String args[])
     {
-        M8583Str dec = new M8583Str();
-        if(1 == args.length)
-            dec.fillWholeMsg(NativeC.nativeDecStr(args[0]));
-        else
-            System.out.println("no input");
+        M8583Str dec = new M8583Str();  
+        if((null == args) || (args.length == 0))
+        {
+            System.out.println("heil");
+            return;    
+        }         
+        dec.fillWholeMsg(NativeC.nativeDecStr(args[0]));       
 
         M8583Bin decb = new M8583Bin();
         byte[] bt = new byte[4];
