@@ -1,4 +1,4 @@
-package com.thaiddd.javaguiex;
+package com.thaiddd.javaguiex.core;
 
 /**
  * NativeC interface
@@ -6,6 +6,8 @@ package com.thaiddd.javaguiex;
  */
 public class NativeC 
 {
+    private NativeC()
+    {}
     public static native String[] nativeDecStr(String msgBody);
     public static native byte[][] nativeDecBin(byte[] msgBody); 
     /*

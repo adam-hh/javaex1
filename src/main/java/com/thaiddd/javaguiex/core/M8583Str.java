@@ -1,4 +1,4 @@
-package com.thaiddd.javaguiex;
+package com.thaiddd.javaguiex.core;
 
 /**
  * 8583 message holder, string mode
