@@ -132,9 +132,9 @@ public class M8583Frame extends JFrame implements BaseFrame
         jtextInput.setLineWrap(true);
         jtextConsole.setLineWrap(true);
 
-        JTextAreaOutputStream out = new JTextAreaOutputStream (jtextConsole);
-        System.setOut (new PrintStream(out)); 
-        System.setErr(new PrintStream(out));
+        // JTextAreaOutputStream out = new JTextAreaOutputStream (jtextConsole);
+        // System.setOut (new PrintStream(out)); 
+        // System.setErr(new PrintStream(out));
     }
     public void initAction()
     {
@@ -145,6 +145,10 @@ public class M8583Frame extends JFrame implements BaseFrame
     {
         setSize(800, 640);
         setLocation(200,200);
+
+        ImageIcon icon = new ImageIcon(M8583Frame.class.getResource("NEXGO.png"));
+        setIconImage(icon.getImage());
+
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
