@@ -128,7 +128,6 @@ public class M8583Frame extends JFrame implements BaseFrame
     }
     public void initDatas()
     {
-        labelFieldVal.setText("域信息");
         labelConsole.setText("控制台区域");
         labelControlPanel.setText("操作面板");
         labelInput.setText("用户输入区");
@@ -194,18 +193,13 @@ public class M8583Frame extends JFrame implements BaseFrame
     {
         jtextInput.setText(null);
     }
-    private void paintImage()
+    public void disableButtonDecode()
     {
-        SwingUtilities.invokeLater( new Runnable(){
-            public void run()
-            {
-                while(true)
-                {
-                    leftBottom_center.repaint();
-                    //TimeUnit.SECONDS.sleep(1);
-                }                
-            }
-        });        
+        buttonDecode.setEnabled(false);
+    }
+    public void enableButtonDecode()
+    {
+        buttonDecode.setEnabled(true);
     }
 }
 
@@ -216,7 +210,6 @@ class MyPicPanel extends JPanel{
     public MyPicPanel(Image m, int width, int height)
     {
         super();
-        //image = m;
         image = m.getScaledInstance(width, height, Image.SCALE_DEFAULT);
     }
 

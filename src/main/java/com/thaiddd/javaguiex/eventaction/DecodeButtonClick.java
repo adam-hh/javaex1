@@ -4,27 +4,37 @@ import com.thaiddd.javaguiex.core.*;
 import com.thaiddd.javaguiex.frame.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.SwingUtilities;
 
-public class DecodeButtonClick extends MouseAdapter
-{
+public class DecodeButtonClick extends MouseAdapter {
     M8583Frame m = M8583Frame.getInstance();
-    //@Override
-    public void mouseClicked(MouseEvent e)
-    {        
-        if(null != m.getFromJTextInput())
-        {
-            SwingUtilities.invokeLater( new Runnable(){            
+
+    // @Override
+    public void mouseClicked(MouseEvent e) {
+        m.disableButtonDecode();
+        if (null != m.getFromJTextInput()) {
+            SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    String[] rlt = new String[68];
+                    //String[] rlt = new String[68];
+                    String[] rlt;
                     rlt = NativeC.nativeDecStr(m.getFromJTextInput());
-                    if(m.updateTableFieldVal(rlt))
+                    if (m.updateTableFieldVal(rlt))
                         m.updateConsole("decode sucess\n");
-                    else    
+                    else
                         m.updateConsole("decode failed\n");
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    m.enableButtonDecode();
                 }
             });
             
         }
+        m.enableButtonDecode();
     }
 }
