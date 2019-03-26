@@ -2,11 +2,17 @@ package com.thaiddd.javaguiex.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Label;
 import java.awt.ScrollPane;
+import java.io.File;
 import java.io.PrintStream;
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.BaseStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.thaiddd.javaguiex.eventaction.ClearButtonClick;
@@ -16,6 +22,7 @@ import com.thaiddd.javaguiex.eventaction.DecodeButtonClick;
 public class M8583Frame extends JFrame implements BaseFrame
 {
     private static final long serialVersionUID = 1L;
+    private static final String ver = "Ver 001.001";
     private static M8583Frame m8583Frame = null;
     public static M8583Frame getInstance()
     {
@@ -35,6 +42,7 @@ public class M8583Frame extends JFrame implements BaseFrame
     private JPanel leftBottom = new JPanel();
     private JPanel rightTop = new JPanel();
     private JPanel rightBottom = new JPanel();
+    private MyPicPanel leftBottom_center;
     /*
     GUI elements, level 2, labels
     */
@@ -51,7 +59,7 @@ public class M8583Frame extends JFrame implements BaseFrame
     GUI elememts, level 2, tabel and text areas
     */
     Object[][] tableContent = new Object[68][2];
-    Object[] tableColumnName = {"Field", "Val"};
+    Object[] tableColumnName = {"域", "值"};
     private JTable tabelFieldVal = new JTable(tableContent, tableColumnName);
     private JScrollPane tabelFieldValScp = new JScrollPane(tabelFieldVal);
     private JTextArea jtextConsole = new JTextArea();
@@ -61,7 +69,7 @@ public class M8583Frame extends JFrame implements BaseFrame
 
     private M8583Frame()
     {
-        setTitle("8583 message decoder");
+        setTitle("8583 报文解码 " + ver);
         setLayout(null);
         addPanels();
         setPanelsBounds();
@@ -100,11 +108,18 @@ public class M8583Frame extends JFrame implements BaseFrame
         rightTop.setLayout(new BorderLayout());
         rightTop.add(labelConsole, BorderLayout.NORTH);
         rightTop.add(jtextConsoleScp, BorderLayout.SOUTH);   
-        jtextConsoleScp.setPreferredSize(new Dimension(380, 380));     
+        jtextConsoleScp.setPreferredSize(new Dimension(380, 380));
 
         leftBottom.setLayout(new BorderLayout());
         leftBottom.add(labelControlPanel, BorderLayout.NORTH);
         leftBottom.add(buttonDecode, BorderLayout.SOUTH);
+        try{
+            ImageIcon icon = new ImageIcon(M8583Frame.class.getResource("MAP.png"));
+            leftBottom_center = new MyPicPanel(icon.getImage(), 380, 160);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        leftBottom.add(leftBottom_center, BorderLayout.CENTER);
 
         rightBottom.setLayout(new BorderLayout());
         rightBottom.add(labelInput, BorderLayout.NORTH);
@@ -113,13 +128,13 @@ public class M8583Frame extends JFrame implements BaseFrame
     }
     public void initDatas()
     {
-        labelFieldVal.setText("Field");
-        labelConsole.setText("Console");
-        labelControlPanel.setText("Control Panel");
-        labelInput.setText("User Input");
+        labelFieldVal.setText("域信息");
+        labelConsole.setText("控制台区域");
+        labelControlPanel.setText("操作面板");
+        labelInput.setText("用户输入区");
 
-        buttonDecode.setText("Decode Go");
-        buttonClear.setText("Clear");
+        buttonDecode.setText("开始解码");
+        buttonClear.setText("清除");
 
         tabelFieldVal.getModel().setValueAt("Len", 0, 0);
         tabelFieldVal.getModel().setValueAt("TPDU", 1, 0);
@@ -151,6 +166,9 @@ public class M8583Frame extends JFrame implements BaseFrame
 
         setResizable(false);
         setVisible(true);
+        //leftBottom.setVisible(true);
+        //leftBottom_center.repaint();
+        //paintImage();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -175,5 +193,39 @@ public class M8583Frame extends JFrame implements BaseFrame
     public void clearInputJText()
     {
         jtextInput.setText(null);
+    }
+    private void paintImage()
+    {
+        SwingUtilities.invokeLater( new Runnable(){
+            public void run()
+            {
+                while(true)
+                {
+                    leftBottom_center.repaint();
+                    //TimeUnit.SECONDS.sleep(1);
+                }                
+            }
+        });        
+    }
+}
+
+class MyPicPanel extends JPanel{
+    
+    private static final long serialVersionUID = 1L;
+    Image image = null;
+    public MyPicPanel(Image m, int width, int height)
+    {
+        super();
+        //image = m;
+        image = m.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+    }
+
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        try {
+            g.drawImage(image, 0, 0, null);
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
     }
 }

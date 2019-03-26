@@ -25,9 +25,9 @@ public class Test
         // }         
         // dec.fillWholeMsg(NativeC.nativeDecStr(args[0]));       
 
-        M8583Bin decb = new M8583Bin();
-        byte[] bt = new byte[4];
-        decb.fillWholeMsg(NativeC.nativeDecBin(bt));
+        // M8583Bin decb = new M8583Bin();
+        // byte[] bt = new byte[4];
+        // decb.fillWholeMsg(NativeC.nativeDecBin(bt));
 
         M8583Frame fr = M8583Frame.getInstance();
         System.out.println("from system.out print test");
