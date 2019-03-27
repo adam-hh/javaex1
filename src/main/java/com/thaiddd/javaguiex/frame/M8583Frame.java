@@ -146,9 +146,9 @@ public class M8583Frame extends JFrame implements BaseFrame
         jtextInput.setLineWrap(true);
         jtextConsole.setLineWrap(true);
 
-        // JTextAreaOutputStream out = new JTextAreaOutputStream (jtextConsole);
-        // System.setOut (new PrintStream(out)); 
-        // System.setErr(new PrintStream(out));
+        JTextAreaOutputStream out = new JTextAreaOutputStream (jtextConsole);
+        System.setOut (new PrintStream(out)); 
+        System.setErr(new PrintStream(out));
     }
     public void initAction()
     {
