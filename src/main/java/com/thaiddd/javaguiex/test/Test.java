@@ -30,6 +30,6 @@ public class Test
         // decb.fillWholeMsg(NativeC.nativeDecBin(bt));
 
         M8583Frame fr = M8583Frame.getInstance();
-        System.out.println("from system.out print test");
+        //System.out.println("from system.out print test");
     }
 }
