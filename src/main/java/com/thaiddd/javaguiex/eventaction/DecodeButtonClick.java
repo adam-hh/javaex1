@@ -18,10 +18,10 @@ public class DecodeButtonClick extends MouseAdapter {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     //String[] rlt = new String[68];
-                    String[] rlt;
-                    System.out.println("debug tag0");
+                    String[] rlt;                    
                     if(m.getFromJTextInput() == null)
                         return;
+                    System.out.println(m.getFromJTextInput());
                     rlt = NativeC.nativeDecStr(m.getFromJTextInput());
                     if (m.updateTableFieldVal(rlt))
                         m.updateConsole("decode sucess\n");
