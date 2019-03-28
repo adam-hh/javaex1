@@ -22,7 +22,7 @@ import com.thaiddd.javaguiex.eventaction.DecodeButtonClick;
 public class M8583Frame extends JFrame implements BaseFrame
 {
     private static final long serialVersionUID = 1L;
-    private static final String ver = "Ver 001.001";
+    private static final String ver = "Ver 2.0";
     private static M8583Frame m8583Frame = null;
     public static M8583Frame getInstance()
     {
@@ -131,6 +131,7 @@ public class M8583Frame extends JFrame implements BaseFrame
         labelConsole.setText("控制台区域");
         labelControlPanel.setText("操作面板");
         labelInput.setText("用户输入区");
+        labelFieldVal.setText("当前报文数据域视图");
 
         buttonDecode.setText("开始解码");
         buttonClear.setText("清除");
@@ -145,6 +146,7 @@ public class M8583Frame extends JFrame implements BaseFrame
 
         jtextInput.setLineWrap(true);
         jtextConsole.setLineWrap(true);
+        jtextConsole.setEditable(false);
 
         JTextAreaOutputStream out = new JTextAreaOutputStream (jtextConsole);
         System.setOut (new PrintStream(out)); 
@@ -184,6 +186,13 @@ public class M8583Frame extends JFrame implements BaseFrame
             tabelFieldVal.getModel().setValueAt(str[i], i, 1);
         }       
         return true; 
+    }
+    public void clearTableFieldVal()
+    {
+        for(int i = 0; i<68; i++)
+        { 
+            tabelFieldVal.getModel().setValueAt(null, i, 1);
+        }
     }
     public void updateConsole(String str)
     {

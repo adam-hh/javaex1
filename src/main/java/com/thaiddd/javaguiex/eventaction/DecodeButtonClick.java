@@ -27,7 +27,11 @@ public class DecodeButtonClick extends MouseAdapter {
                     if (m.updateTableFieldVal(rlt))
                         m.updateConsole(date.format(new Date()) + " DECODE SUCESS!\n");
                     else
-                        m.updateConsole(date.format(new Date()) + " DECODE FAIL!\n");      
+                        {
+                            m.updateConsole(date.format(new Date()) + " DECODE FAIL!\n");  
+                            m.clearTableFieldVal();
+                        }
+                            
                     try{
                         String s;
                         BufferedReader in = new BufferedReader(new FileReader("c_console"));                        
