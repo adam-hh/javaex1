@@ -35,8 +35,10 @@ public class NativeC
             String rlt = Integer.toHexString(val);
             if(rlt.length() == 1)
                 sb.append("0");
-            sb.append(rlt);
+            sb.append(rlt + " ");
+            if((i + 1) % 16 == 0)
+                sb.append("\n");
         }        
         return sb.toString();
-    }   
+    }     
 }
