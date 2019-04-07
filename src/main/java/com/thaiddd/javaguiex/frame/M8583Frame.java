@@ -2,6 +2,7 @@ package com.thaiddd.javaguiex.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Label;
@@ -17,6 +18,11 @@ import javax.swing.*;
 
 import com.thaiddd.javaguiex.eventaction.ClearButtonClick;
 import com.thaiddd.javaguiex.eventaction.DecodeButtonClick;
+import com.thaiddd.javaguiex.eventaction.LunchButtonClick;
+import com.thaiddd.javaguiex.eventaction.ScanButtonClick;
+import com.thaiddd.javaguiex.eventaction.SpaceButtonClick;
+import com.thaiddd.javaguiex.eventaction.StopButtonClick;
+import com.thaiddd.javaguiex.eventaction.TrimButtonClick;
 
 
 public class M8583Frame extends JFrame implements BaseFrame
@@ -43,6 +49,9 @@ public class M8583Frame extends JFrame implements BaseFrame
     private JPanel rightTop = new JPanel();
     private JPanel rightBottom = new JPanel();
     private MyPicPanel leftBottom_center;
+    private JPanel rTop = new JPanel();
+    private JPanel rBot = new JPanel();
+    private JPanel midBottom = new JPanel();    
     /*
     GUI elements, level 2, labels
     */
@@ -50,11 +59,27 @@ public class M8583Frame extends JFrame implements BaseFrame
     private JLabel labelControlPanel = new JLabel();
     private JLabel labelConsole = new JLabel();
     private JLabel labelInput = new JLabel();
+    private JLabel labelMessage = new JLabel();
+    private JLabel labelMonitor = new JLabel();
+    private JLabel labelTPDU = new JLabel();
+    private JLabel labelPort = new JLabel();
+
+    /*
+    GUI elements, textfield
+    */
+    private JTextField textTPDU = new JTextField();
+    private JTextField textPort = new JTextField();
     /*
     GUI elements, level 2, buttons
     */
     private JButton buttonDecode = new JButton();
     private JButton buttonClear = new JButton();
+    private JButton buttonTrim = new JButton();
+    private JButton buttonSpace = new JButton();
+    private JButton buttonTPDU = new JButton();
+    private JButton buttonLunch = new JButton();
+    private JButton buttonStop = new JButton();
+    private JButton buttonScan = new JButton();
     /*
     GUI elememts, level 2, tabel and text areas
     */
@@ -62,10 +87,12 @@ public class M8583Frame extends JFrame implements BaseFrame
     Object[] tableColumnName = {"域", "值"};
     private JTable tabelFieldVal = new JTable(tableContent, tableColumnName);
     private JScrollPane tabelFieldValScp = new JScrollPane(tabelFieldVal);
-    private JTextArea jtextConsole = new JTextArea();
+    private TextAreaMenu jtextConsole = new TextAreaMenu();
     private JScrollPane jtextConsoleScp = new JScrollPane(jtextConsole);
-    private JTextArea jtextInput = new JTextArea();
+    private TextAreaMenu jtextInput = new TextAreaMenu();
     private JScrollPane jtextInputScp = new JScrollPane(jtextInput);
+    private TextAreaMenu jtextMessage = new TextAreaMenu();
+    private JScrollPane jtextMessageScp = new JScrollPane(jtextMessage);
 
     private M8583Frame()
     {
@@ -89,13 +116,17 @@ public class M8583Frame extends JFrame implements BaseFrame
         add(leftBottom);
         add(rightTop);
         add(rightBottom);
+        add(rTop);
+        add(rBot);
     }
     public void setPanelsBounds()
     {
-        leftTop.setBounds(10, 10, 380, 400);
-        leftBottom.setBounds(10, 410, 380, 190);
-        rightTop.setBounds(410, 10, 380,400);
-        rightBottom.setBounds(410, 410, 380, 190);
+        leftTop.setBounds(10, 10, 330, 440);
+        leftBottom.setBounds(10, 450, 330, 215);
+        rightTop.setBounds(350, 10, 330,440);
+        rightBottom.setBounds(350, 450, 330, 215);
+        rTop.setBounds(690, 10, 330, 440);
+        rBot.setBounds(690, 450, 330, 215);
     }
     
     public void initLayouts()
@@ -103,19 +134,19 @@ public class M8583Frame extends JFrame implements BaseFrame
         leftTop.setLayout(new BorderLayout());
         leftTop.add(labelFieldVal, BorderLayout.NORTH);
         leftTop.add(tabelFieldValScp, BorderLayout.SOUTH);
-        tabelFieldValScp.setPreferredSize(new Dimension(380, 380));
+        tabelFieldValScp.setPreferredSize(new Dimension(330, 420));
 
         rightTop.setLayout(new BorderLayout());
         rightTop.add(labelConsole, BorderLayout.NORTH);
         rightTop.add(jtextConsoleScp, BorderLayout.SOUTH);   
-        jtextConsoleScp.setPreferredSize(new Dimension(380, 380));
+        jtextConsoleScp.setPreferredSize(new Dimension(330, 420));
 
         leftBottom.setLayout(new BorderLayout());
         leftBottom.add(labelControlPanel, BorderLayout.NORTH);
         leftBottom.add(buttonDecode, BorderLayout.SOUTH);
         try{
             ImageIcon icon = new ImageIcon(M8583Frame.class.getResource("MAP.png"));
-            leftBottom_center = new MyPicPanel(icon.getImage(), 380, 160);
+            leftBottom_center = new MyPicPanel(icon.getImage(), 330, 150);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -124,7 +155,37 @@ public class M8583Frame extends JFrame implements BaseFrame
         rightBottom.setLayout(new BorderLayout());
         rightBottom.add(labelInput, BorderLayout.NORTH);
         rightBottom.add(jtextInputScp, BorderLayout.CENTER);
-        rightBottom.add(buttonClear, BorderLayout.SOUTH);
+
+        rTop.setLayout(new BorderLayout());
+        rTop.add(labelMessage, BorderLayout.NORTH);
+        rTop.add(jtextMessageScp, BorderLayout.SOUTH);
+        jtextMessageScp.setPreferredSize(new Dimension(330, 420));
+
+        rBot.setLayout(null);
+        rBot.add(labelMonitor);
+        labelMonitor.setBounds(0, 0, 60, 20);
+        rBot.add(buttonLunch);
+        buttonLunch.setBounds(0, 90, 155,25);
+        rBot.add(buttonStop);
+        buttonStop.setBounds(160, 90, 155, 25);
+        rBot.add(labelPort);
+        labelPort.setBounds(0, 60, 160, 25);
+        rBot.add(textPort);
+        textPort.setBounds(185, 60, 130, 25);
+        rBot.add(buttonScan);
+        buttonScan.setBounds(0, 25, 320, 25);
+
+        rightBottom.add(midBottom, BorderLayout.SOUTH);
+        midBottom.setPreferredSize(new Dimension(330, 60));        
+        midBottom.add(labelTPDU);
+        midBottom.add(textTPDU);
+        labelTPDU.setPreferredSize(new Dimension(100, 23));
+        textTPDU.setPreferredSize(new Dimension(220, 23));
+
+        midBottom.add(buttonTPDU);        
+        midBottom.add(buttonTrim);
+        midBottom.add(buttonSpace);  
+        midBottom.add(buttonClear);      
     }
     public void initDatas()
     {
@@ -132,9 +193,20 @@ public class M8583Frame extends JFrame implements BaseFrame
         labelControlPanel.setText("操作面板");
         labelInput.setText("用户输入区");
         labelFieldVal.setText("当前报文数据域视图");
+        labelMessage.setText("报文捕获");
+        labelMonitor.setText("监控设置");
+        labelTPDU.setText("在这里输入TPDU:");
+        labelPort.setText("端口号：");
+        textPort.setText("443");
 
         buttonDecode.setText("开始解码");
         buttonClear.setText("清除");
+        buttonTrim.setText("去空格");
+        buttonSpace.setText("加空格");
+        buttonTPDU.setText("按TPDU提取");
+        buttonLunch.setText("设置过滤器");
+        buttonStop.setText("启动抓包");
+        buttonScan.setText("扫描网卡（启动抓包前要先打开活动网卡");
 
         tabelFieldVal.getModel().setValueAt("Len", 0, 0);
         tabelFieldVal.getModel().setValueAt("TPDU", 1, 0);
@@ -147,19 +219,29 @@ public class M8583Frame extends JFrame implements BaseFrame
         jtextInput.setLineWrap(true);
         jtextConsole.setLineWrap(true);
         jtextConsole.setEditable(false);
+        jtextMessage.setEditable(false);        
 
         JTextAreaOutputStream out = new JTextAreaOutputStream (jtextConsole);
         System.setOut (new PrintStream(out)); 
         System.setErr(new PrintStream(out));
+
+        jtextConsole.setFont(new Font("宋体", Font.BOLD, 11));
+        jtextMessage.setFont(new Font("宋体", Font.BOLD, 11));
+        jtextInput.setFont(new Font("宋体", Font.BOLD, 10));
     }
     public void initAction()
     {
         buttonDecode.addMouseListener(new DecodeButtonClick());
         buttonClear.addMouseListener(new ClearButtonClick());
+        buttonScan.addMouseListener(new ScanButtonClick());
+        buttonLunch.addMouseListener(new LunchButtonClick());
+        buttonStop.addMouseListener(new StopButtonClick());
+        buttonTrim.addMouseListener(new TrimButtonClick());
+        buttonSpace.addMouseListener(new SpaceButtonClick());
     }
     public void setMain()
     {
-        setSize(800, 640);
+        setSize(1035, 700);
         setLocation(200,200);
 
         ImageIcon icon = new ImageIcon(M8583Frame.class.getResource("NEXGO.png"));
@@ -210,6 +292,70 @@ public class M8583Frame extends JFrame implements BaseFrame
     {
         buttonDecode.setEnabled(true);
     }
+    public void setMessage(String s)
+    {
+        jtextMessage.append(s);
+    }
+    public void disableStopButton()
+    {
+        buttonStop.setEnabled(false);
+    }
+    public void disableLunchButton()
+    {
+        buttonLunch.setEnabled(false);
+    }
+    public int getFilter()
+    {
+        if(textPort.getText() == null)
+            return 0;
+        return Integer.parseInt(textPort.getText());
+    }
+    public void trimInput()
+    {
+        char[] achar = jtextInput.getText().toCharArray();
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        for(char c: achar)
+        {                  
+            if((c != 0x0D)&&(c != 0x0A)&&(c != 0x09)&&(c != 0x20))
+            {                
+                sb.append(c);
+                if(((i+1)%32 == 0)&&(i!=0))
+                    sb.append("\n");
+                i++; 
+            }
+        }
+        sb.append("\n");
+        jtextInput.setText(sb.toString());
+    }
+    public void spaceInput()
+    {
+        StringBuilder sb = new StringBuilder();
+        String str = jtextInput.getText();
+        char[] achar = str.toCharArray();
+        int i = 0;
+        for(char c: achar)
+        {                  
+            if((c != 0x0D)&&(c != 0x0A)&&(c != 0x09)&&(c != 0x20))
+            {
+                i++; 
+                sb.append(c);
+                if(i%2 == 0)
+                    sb.append(" ");
+            }                
+            if((i%32 == 0) &&(i!=1))
+                sb.append("\n");
+        }        
+        jtextInput.setText(sb.toString());
+    }
+    public String GetUserInput()
+    {
+        return jtextInput.getText();
+    }
+    public void UpdateUserInput(String s)
+    {
+        jtextInput.setText(s);
+    }
 }
 
 class MyPicPanel extends JPanel{
@@ -229,5 +375,5 @@ class MyPicPanel extends JPanel{
         }catch(Exception e){
             e.printStackTrace();
         }        
-    }
+    }    
 }
