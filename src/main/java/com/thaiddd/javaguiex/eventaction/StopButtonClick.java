@@ -28,10 +28,13 @@ public class StopButtonClick extends MouseAdapter
                     int rlt = Dump.readFromUserBuff(db);
                     if(1 == rlt)
                     {
-                        m.setMessage(db.toString() + "\n");
+                        String st = db.toString();
+                        m.setMessage(st + "\n");
                         for(int i=0; i<db.extraInfo.length; i++)
                             db.extraInfo[i] = 0;
                         db.data = null;
+                        st = null;
+                        //System.gc();
                     }
                     if(0 == rlt)
                     {
@@ -42,7 +45,7 @@ public class StopButtonClick extends MouseAdapter
                             e.printStackTrace();
                         }
                         continue;
-                    }                        
+                    }
                     if(-1 == rlt)
                     {
                         m.setMessage("readFromUserBuff fatal error occured." + "\n");
