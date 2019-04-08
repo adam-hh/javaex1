@@ -316,11 +316,12 @@ public class M8583Frame extends JFrame implements BaseFrame
     public void disableStopButton()
     {
         buttonStop.setEnabled(false);
-        buttonScan.removeMouseListener(mSetScan);
+        buttonStop.removeMouseListener(mSetScan);
     }
     public void enableStopButton()
     {
         buttonStop.setEnabled(true);
+        buttonStop.addMouseListener(mSetScan);
     }
     public void disableLunchButton()
     {
