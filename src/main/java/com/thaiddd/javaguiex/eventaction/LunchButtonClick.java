@@ -14,13 +14,16 @@ import javax.swing.SwingUtilities;
 public class LunchButtonClick extends MouseAdapter
 {
     M8583Frame m = M8583Frame.getInstance();
-    public void mouseClicked(MouseEvent ee){         
-        new Thread(new Runnable(){        
-            public void run() {                
-                int in = m.getFilter();
-                if(0 == in)
-                {
-                    System.out.println("illegal port number:" + in);
+    public void mouseClicked(MouseEvent ee){
+        new Thread(new Runnable(){
+            public void run() {
+                m.disableLunchButton();
+                int in = 0;
+                try{
+                    in = Integer.parseInt(m.getFilter()) ;
+                }catch(Exception ep) {
+                    System.out.println("illegal port number:" + m.getFilter());
+                    m.enableLunchButton();
                     return;
                 }
                 StringBuilder sb = new StringBuilder();
@@ -28,25 +31,20 @@ public class LunchButtonClick extends MouseAdapter
                 sb.append(in & 0xFFFF);                
                 if(1 == Dump.setFilter(sb.toString()))
                 {
-                    m.disableLunchButton();
                     System.out.println("setFilter:" +sb.toString());
                 }                    
                 else
                 {
                     System.out.println("setFilter error");
+                    m.enableLunchButton();
                     return;
                 }
                 
                 System.out.println("loop(0) begin:");
                 int it = Dump.loop(0);
-                System.out.println("loop(0) returned:" + it);                
-                try{
-                    TimeUnit.SECONDS.sleep(3);
-                }catch(Exception e1)
-                {
-                    e1.printStackTrace();
-                }               
+                System.out.println("loop(0) returned:" + it);
+                m.enableLunchButton();
             }
-        }).start();     
+        }).start();
     }
 }

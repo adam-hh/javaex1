@@ -17,7 +17,8 @@ public class StopButtonClick extends MouseAdapter
     public void mouseClicked(MouseEvent ev)
     {
         new Thread(new Runnable(){            
-            public void run() {                
+            public void run() {
+                m.disableStopButton();
                 TcpDataBlock db = new TcpDataBlock();
                 db.extraInfo = new byte[30];
                 db.ipSrc = new byte[4];
@@ -31,20 +32,25 @@ public class StopButtonClick extends MouseAdapter
                         for(int i=0; i<db.extraInfo.length; i++)
                             db.extraInfo[i] = 0;
                         db.data = null;
-                    }                        
+                    }
                     if(0 == rlt)
                     {
-                        m.disableStopButton();
+                        try{
+                            TimeUnit.MILLISECONDS.sleep(1000);
+                        }catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                         continue;
                     }                        
                     if(-1 == rlt)
                     {
                         m.setMessage("readFromUserBuff fatal error occured." + "\n");
+                        m.enableStopButton();
                         return;
-                    } 
+                    }
                 }
-                                   
-            }            
+            }
         }).start();  
     }
 }

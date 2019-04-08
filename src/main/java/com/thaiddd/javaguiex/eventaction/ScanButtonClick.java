@@ -19,6 +19,8 @@ public class ScanButtonClick extends MouseAdapter
     public void mouseClicked(MouseEvent e) 
     {
         final NICScanFrame nf = NICScanFrame.getInstance(m); 
+        nf.releaseInstance();
+        //m.disableScanButton();
         //nf.setVisible(true);      
     }
 }

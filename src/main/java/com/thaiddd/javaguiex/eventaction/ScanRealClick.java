@@ -32,6 +32,5 @@ public class ScanRealClick extends MouseAdapter
                     if(nd[i].description != null)
                         m.SetTextContent("\t" + nd[i].description + "\n");
                 }
-                     
     }
 }

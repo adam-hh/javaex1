@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.ScrollPane;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.PrintStream;
 import java.sql.Time;
@@ -19,16 +20,18 @@ import javax.swing.*;
 import com.thaiddd.javaguiex.eventaction.ClearButtonClick;
 import com.thaiddd.javaguiex.eventaction.DecodeButtonClick;
 import com.thaiddd.javaguiex.eventaction.LunchButtonClick;
+import com.thaiddd.javaguiex.eventaction.RStopButtonClick;
 import com.thaiddd.javaguiex.eventaction.ScanButtonClick;
 import com.thaiddd.javaguiex.eventaction.SpaceButtonClick;
 import com.thaiddd.javaguiex.eventaction.StopButtonClick;
+import com.thaiddd.javaguiex.eventaction.TPDUButtonClick;
 import com.thaiddd.javaguiex.eventaction.TrimButtonClick;
 
 
 public class M8583Frame extends JFrame implements BaseFrame
 {
     private static final long serialVersionUID = 1L;
-    private static final String ver = "Ver 2.0";
+    private static final String ver = "Ver 3.0";
     private static M8583Frame m8583Frame = null;
     public static M8583Frame getInstance()
     {
@@ -80,6 +83,7 @@ public class M8583Frame extends JFrame implements BaseFrame
     private JButton buttonLunch = new JButton();
     private JButton buttonStop = new JButton();
     private JButton buttonScan = new JButton();
+    private JButton buttonRStop = new JButton();
     /*
     GUI elememts, level 2, tabel and text areas
     */
@@ -93,6 +97,11 @@ public class M8583Frame extends JFrame implements BaseFrame
     private JScrollPane jtextInputScp = new JScrollPane(jtextInput);
     private TextAreaMenu jtextMessage = new TextAreaMenu();
     private JScrollPane jtextMessageScp = new JScrollPane(jtextMessage);
+
+    //Listener
+    private MouseListener mScan;// = new ScanButtonClick();
+    private MouseListener mSetScan; // set on filter button
+    private MouseListener mLunch; //set on lunch button
 
     private M8583Frame()
     {
@@ -168,6 +177,8 @@ public class M8583Frame extends JFrame implements BaseFrame
         buttonLunch.setBounds(0, 90, 155,25);
         rBot.add(buttonStop);
         buttonStop.setBounds(160, 90, 155, 25);
+        rBot.add(buttonRStop);
+        buttonRStop.setBounds(80, 120, 155, 25);
         rBot.add(labelPort);
         labelPort.setBounds(0, 60, 160, 25);
         rBot.add(textPort);
@@ -203,10 +214,11 @@ public class M8583Frame extends JFrame implements BaseFrame
         buttonClear.setText("清除");
         buttonTrim.setText("去空格");
         buttonSpace.setText("加空格");
-        buttonTPDU.setText("按TPDU提取");
+        buttonTPDU.setText("测试TPDU");
         buttonLunch.setText("设置过滤器");
         buttonStop.setText("启动抓包");
         buttonScan.setText("扫描网卡（启动抓包前要先打开活动网卡");
+        buttonRStop.setText("停止");
 
         tabelFieldVal.getModel().setValueAt("Len", 0, 0);
         tabelFieldVal.getModel().setValueAt("TPDU", 1, 0);
@@ -233,11 +245,16 @@ public class M8583Frame extends JFrame implements BaseFrame
     {
         buttonDecode.addMouseListener(new DecodeButtonClick());
         buttonClear.addMouseListener(new ClearButtonClick());
-        buttonScan.addMouseListener(new ScanButtonClick());
-        buttonLunch.addMouseListener(new LunchButtonClick());
-        buttonStop.addMouseListener(new StopButtonClick());
+        mScan = new ScanButtonClick();
+        buttonScan.addMouseListener(mScan);
+        mLunch = new LunchButtonClick();
+        buttonLunch.addMouseListener(mLunch);
+        mSetScan = new StopButtonClick();
+        buttonStop.addMouseListener(mSetScan);
         buttonTrim.addMouseListener(new TrimButtonClick());
         buttonSpace.addMouseListener(new SpaceButtonClick());
+        buttonRStop.addMouseListener(new RStopButtonClick());
+        buttonTPDU.addMouseListener(new TPDUButtonClick());
     }
     public void setMain()
     {
@@ -299,33 +316,51 @@ public class M8583Frame extends JFrame implements BaseFrame
     public void disableStopButton()
     {
         buttonStop.setEnabled(false);
+        buttonScan.removeMouseListener(mSetScan);
+    }
+    public void enableStopButton()
+    {
+        buttonStop.setEnabled(true);
     }
     public void disableLunchButton()
     {
         buttonLunch.setEnabled(false);
+        buttonLunch.removeMouseListener(mLunch);
     }
-    public int getFilter()
+    public void enableLunchButton()
     {
-        if(textPort.getText() == null)
-            return 0;
-        return Integer.parseInt(textPort.getText());
+        buttonLunch.setEnabled(true);
+        buttonLunch.addMouseListener(mLunch);
+    }
+    public void enableScanButton()
+    {
+        buttonScan.setEnabled(true);
+    }
+    public void disableScanButton()
+    {
+        buttonScan.setEnabled(false);
+        buttonScan.removeMouseListener(mScan);
+    }
+    public String getFilter()
+    {
+        return textPort.getText();
     }
     public void trimInput()
     {
         char[] achar = jtextInput.getText().toCharArray();
         StringBuilder sb = new StringBuilder();
-        int i = 0;
+        //int i = 0;
         for(char c: achar)
         {                  
             if((c != 0x0D)&&(c != 0x0A)&&(c != 0x09)&&(c != 0x20))
             {                
                 sb.append(c);
-                if(((i+1)%32 == 0)&&(i!=0))
-                    sb.append("\n");
-                i++; 
+                // if(((i+1)%32 == 0)&&(i!=0))
+                //     sb.append("\n");
+                //i++; 
             }
         }
-        sb.append("\n");
+        //sb.append("\n");
         jtextInput.setText(sb.toString());
     }
     public void spaceInput()
@@ -342,15 +377,19 @@ public class M8583Frame extends JFrame implements BaseFrame
                 sb.append(c);
                 if(i%2 == 0)
                     sb.append(" ");
-            }                
-            if((i%32 == 0) &&(i!=1))
-                sb.append("\n");
-        }        
+                if((i%32 == 0) &&(i!=1))
+                    sb.append("\n");
+            }
+        }
         jtextInput.setText(sb.toString());
     }
     public String GetUserInput()
     {
         return jtextInput.getText();
+    }
+    public String getFromTPDU()
+    {
+        return textTPDU.getText();
     }
     public void UpdateUserInput(String s)
     {

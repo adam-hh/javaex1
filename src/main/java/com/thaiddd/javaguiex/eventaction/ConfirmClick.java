@@ -13,11 +13,23 @@ public class ConfirmClick extends MouseAdapter
     final NICScanFrame m = NICScanFrame.getInstance();       
     public void mouseClicked(MouseEvent e) 
     {
-        if(1 == Dump.openDev(m.GetContentFromTextField()))
+        String st = m.GetContentFromTextField();
+        int in = 0;
+        try{
+            in = Integer.parseInt(st);
+        }catch(Exception ep)
+        {
+            //ep.printStackTrace();
+            m.SetTextContent("Illegal Input!\n");
+            return;
+        }
+        if(1 == Dump.openDev(in))
         {
             m.SetTextContent("Open " +m.GetContentFromTextField() + " sucessed\n");
-            m.setVisible(false);
-        }            
+            System.out.println("Open No." +m.GetContentFromTextField() + " device sucessed");
+            mm.disableScanButton();
+            m.dispose();
+        }
         else   
         {
             m.SetTextContent("Open " +m.GetContentFromTextField() + " failed, check the index\n");

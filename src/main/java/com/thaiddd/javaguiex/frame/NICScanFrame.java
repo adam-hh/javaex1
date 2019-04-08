@@ -31,6 +31,10 @@ public class NICScanFrame extends JDialog
     {
         return NICScanInstance;
     }
+    public void releaseInstance()
+    {
+        NICScanInstance = null;
+    }
     private JPanel panelContent = new JPanel();
     private TextAreaMenu textContent = new TextAreaMenu();
     private JLabel labelHint = new JLabel();
@@ -82,7 +86,7 @@ public class NICScanFrame extends JDialog
 
         setResizable(false);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public void SetTextContent(String s)
@@ -93,9 +97,9 @@ public class NICScanFrame extends JDialog
     {
         textContent.setText(null);
     }
-    public int GetContentFromTextField()
+    public String GetContentFromTextField()
     {
-        return Integer.parseInt(textHint.getText());
+        return textHint.getText();
     }
 
 }
