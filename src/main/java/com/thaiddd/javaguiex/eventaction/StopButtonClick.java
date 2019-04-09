@@ -30,6 +30,7 @@ public class StopButtonClick extends MouseAdapter
                     {
                         String st = db.toString();
                         m.setMessage(st + "\n");
+                        m.updateMsgVerScrollbar();
                         for(int i=0; i<db.extraInfo.length; i++)
                             db.extraInfo[i] = 0;
                         db.data = null;

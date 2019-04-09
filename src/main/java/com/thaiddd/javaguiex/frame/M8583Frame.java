@@ -16,6 +16,7 @@ import java.util.stream.BaseStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 
 import com.thaiddd.javaguiex.eventaction.ClearButtonClick;
 import com.thaiddd.javaguiex.eventaction.DecodeButtonClick;
@@ -241,6 +242,11 @@ public class M8583Frame extends JFrame implements BaseFrame
         jtextConsole.setFont(new Font("宋体", Font.BOLD, 11));
         jtextMessage.setFont(new Font("宋体", Font.BOLD, 11));
         jtextInput.setFont(new Font("宋体", Font.BOLD, 10));
+
+        DefaultCaret deca = (DefaultCaret)jtextMessage.getCaret();
+        deca.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        deca = (DefaultCaret)jtextConsole.getCaret();
+        deca.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
     public void initAction()
     {
@@ -412,6 +418,18 @@ public class M8583Frame extends JFrame implements BaseFrame
     public void UpdateUserInput(String s)
     {
         jtextInput.setText(s);
+    }
+    public void updateMsgVerScrollbar()
+    {
+        jtextMessage.setSelectionStart(jtextMessage.getText().length());
+        JScrollBar ver = jtextConsoleScp.getVerticalScrollBar();
+        ver.setValue(ver.getMaximum());
+    }
+    public void updateConVerScrollbar()
+    {
+        jtextConsole.setSelectionStart(jtextConsole.getText().length());
+        JScrollBar ver = jtextConsoleScp.getVerticalScrollBar();
+        ver.setValue(ver.getMaximum());
     }
 }
 

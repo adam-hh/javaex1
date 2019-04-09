@@ -31,7 +31,6 @@ public class DecodeButtonClick extends MouseAdapter {
                             m.updateConsole(date.format(new Date()) + " DECODE FAIL!\n");  
                             m.clearTableFieldVal();
                         }
-                            
                     try{
                         String s;
                         BufferedReader in = new BufferedReader(new FileReader("c_console"));                        
@@ -40,10 +39,11 @@ public class DecodeButtonClick extends MouseAdapter {
                             sb.append(s + "\n");
                         in.close();
                         m.updateConsole(sb.toString());
+                        m.updateConVerScrollbar();
                     }catch(Exception e)
                     {
                         e.printStackTrace();
-                    }                                  
+                    }
                     //m.enableButtonDecode();
                 }
             });
