@@ -15,9 +15,11 @@ public class LunchButtonClick extends MouseAdapter
 {
     M8583Frame m = M8583Frame.getInstance();
     public void mouseClicked(MouseEvent ee){
+        m.disableLunchButton();
+        m.emptyMessage();
+        System.out.println("message cache emptied.");
         new Thread(new Runnable(){
-            public void run() {
-                m.disableLunchButton();
+            public void run() {                
                 int in = 0;
                 try{
                     in = Integer.parseInt(m.getFilter()) ;
@@ -41,6 +43,7 @@ public class LunchButtonClick extends MouseAdapter
                 }
                 
                 System.out.println("loop(0) begin:");
+                m.enableRStopButton();
                 int it = Dump.loop(0);
                 System.out.println("loop(0) returned:" + it);
                 m.enableLunchButton();

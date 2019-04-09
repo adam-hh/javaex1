@@ -102,6 +102,7 @@ public class M8583Frame extends JFrame implements BaseFrame
     private MouseListener mScan;// = new ScanButtonClick();
     private MouseListener mSetScan; // set on filter button
     private MouseListener mLunch; //set on lunch button
+    private MouseListener mRStop; //set on RStop button
 
     private M8583Frame()
     {
@@ -253,7 +254,9 @@ public class M8583Frame extends JFrame implements BaseFrame
         buttonStop.addMouseListener(mSetScan);
         buttonTrim.addMouseListener(new TrimButtonClick());
         buttonSpace.addMouseListener(new SpaceButtonClick());
-        buttonRStop.addMouseListener(new RStopButtonClick());
+        mRStop = new RStopButtonClick();
+        buttonRStop.addMouseListener(mRStop);
+        //buttonRStop.addMouseListener(new RStopButtonClick());
         buttonTPDU.addMouseListener(new TPDUButtonClick());
     }
     public void setMain()
@@ -313,6 +316,10 @@ public class M8583Frame extends JFrame implements BaseFrame
     {
         jtextMessage.append(s);
     }
+    public void emptyMessage()
+    {
+        jtextMessage.setText(null);
+    }
     public void disableStopButton()
     {
         buttonStop.setEnabled(false);
@@ -341,6 +348,16 @@ public class M8583Frame extends JFrame implements BaseFrame
     {
         buttonScan.setEnabled(false);
         buttonScan.removeMouseListener(mScan);
+    }
+    public void enableRStopButton()
+    {
+        buttonRStop.setEnabled(true);
+        buttonRStop.addMouseListener(mRStop);
+    }
+    public void disableRStopButton()
+    {
+        buttonRStop.setEnabled(false);
+        buttonRStop.removeMouseListener(mRStop);
     }
     public String getFilter()
     {

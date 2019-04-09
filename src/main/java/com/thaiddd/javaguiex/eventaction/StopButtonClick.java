@@ -16,9 +16,9 @@ public class StopButtonClick extends MouseAdapter
     M8583Frame m = M8583Frame.getInstance();
     public void mouseClicked(MouseEvent ev)
     {
-        new Thread(new Runnable(){            
-            public void run() {
-                m.disableStopButton();
+        m.disableStopButton();
+        new Thread(new Runnable(){
+            public void run() {                
                 TcpDataBlock db = new TcpDataBlock();
                 db.extraInfo = new byte[30];
                 db.ipSrc = new byte[4];
@@ -48,7 +48,8 @@ public class StopButtonClick extends MouseAdapter
                     }
                     if(-1 == rlt)
                     {
-                        m.setMessage("readFromUserBuff fatal error occured." + "\n");
+                        //m.setMessage("readFromUserBuff fatal error occured." + "\n");
+                        System.out.println("readFromUserBuff fatal error occured.");
                         m.enableStopButton();
                         return;
                     }
