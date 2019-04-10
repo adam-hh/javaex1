@@ -32,7 +32,8 @@ import com.thaiddd.javaguiex.eventaction.TrimButtonClick;
 public class M8583Frame extends JFrame implements BaseFrame
 {
     private static final long serialVersionUID = 1L;
-    private static final String ver = "Ver 3.0";
+    private static final String ver = "Ver 3.1";
+    private static final String author = "@胡辉";
     private static M8583Frame m8583Frame = null;
     public static M8583Frame getInstance()
     {
@@ -107,7 +108,7 @@ public class M8583Frame extends JFrame implements BaseFrame
 
     private M8583Frame()
     {
-        setTitle("8583 报文解码 " + ver);
+        setTitle("8583 报文解码 " + ver + author);
         setLayout(null);
         addPanels();
         setPanelsBounds();
