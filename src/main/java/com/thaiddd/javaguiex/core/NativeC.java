@@ -8,6 +8,7 @@ public class NativeC
 {
     private NativeC()
     {}
+    public static native int connect();
     public static native String[] nativeDecStr(String msgBody);
     public static native byte[][] nativeDecBin(byte[] msgBody); 
     /*

@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     com_thaiddd_javaguiex_core_NativeC
+ * Method:    connect
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_thaiddd_javaguiex_core_NativeC_connect
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_thaiddd_javaguiex_core_NativeC
  * Method:    nativeDecStr
  * Signature: (Ljava/lang/String;)[Ljava/lang/String;
  */
